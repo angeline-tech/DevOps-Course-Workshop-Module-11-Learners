@@ -2,6 +2,19 @@
   "scriptFile": "__init__.py",
   "bindings": [
     {
+      "name": "message",
+      "type": "table",
+      "tableName": "AcmeTranslations",
+      "partitionKey": "message",
+      "direction": "out"
+    },
+    {
+      "type": "queue",
+      "direction": "out",
+      "name": "queue",
+      "queueName": "acmesub-translations-queue"
+    },
+    {
       "authLevel": "Anonymous",
       "type": "httpTrigger",
       "direction": "in",

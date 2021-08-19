@@ -1,0 +1,26 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "name": "messageJSON",
+      "type": "table",
+      "tableName": "AcmeTranslations",
+      "partitionKey": "message",
+      "rowKey": "{RowKey}",
+      "direction": "in"
+    },
+    {
+      "name": "msg",
+      "type": "queueTrigger",
+      "direction": "in",
+      "queueName": "acmesub-translations-queue"
+    },
+    {
+      "name": "translatedMessage",
+      "type": "table",
+      "tableName": "AcmeProcessedTranslations",
+      "partitionKey": "translatedMessage",
+      "direction": "out"
+    }
+  ]
+}

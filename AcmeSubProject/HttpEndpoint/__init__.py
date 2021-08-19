@@ -3,9 +3,9 @@ import time
 import azure.functions as func
 import uuid
 import json
+import typing
 
-
-def main(request: func.HttpRequest, message: func.Out[str],queue: func.Out[str]) -> func.HttpResponse:
+def main(request: func.HttpRequest, message: func.Out[str],queue: func.Out[typing.List[str]]) -> func.HttpResponse:
     logging.info('HTTP trigger function received a request.')
     start = time.time()
 
@@ -15,13 +15,18 @@ def main(request: func.HttpRequest, message: func.Out[str],queue: func.Out[str])
 
     rowKey = str(uuid.uuid4())
 
+    messages = []
+
     for language in languages:
         event_data = {
             "RowKey":rowKey,
             "languageCode": language
         }
-        queue.set(json.dumps(event_data))
+        logging.warning(event_data)
 
+        messages.append(json.dumps(event_data))
+
+    queue.set(messages)
 
     data = {
         "Subtitle": subtitle,
